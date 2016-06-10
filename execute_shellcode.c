@@ -1,5 +1,5 @@
 /*
-Linux shellcode executer. Reserving RWX memory and running shellcode 
+Linux shellcode executer. Reserving RWX memory and running shellcode
 from there.
 Balazs Bucsay
 @xoreipeip | earthquake <at@> rycon <do.t> hu  

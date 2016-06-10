@@ -1,10 +1,19 @@
+/*
+Linux shellcode executer. Reserving RWX memory and running shellcode 
+from there.
+Balazs Bucsay
+@xoreipeip | earthquake <at@> rycon <do.t> hu  
+http://rycon.hu
+no error handling. just for testing purposes
+*/
+
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/mman.h>
 #include <string.h>
 
 // PUT YOUT SHELLCODE HERE! DO NOT FORGET THE LENGTH
-unsigned int payload_len = 118;
+unsigned int payload_len = ;
 char *payload = ""
 
 int main(int argc, char *argv[])

